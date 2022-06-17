@@ -1,37 +1,28 @@
 /**
- * @param {number[]} nums1
- * @param {number} m
- * @param {number[]} nums2
- * @param {number} n
- * @return {void} Do not return anything, modify nums1 in-place instead.
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
  */
 
-const _shift = (arr, index, maxI) => {
-  let currI = maxI;
-
-  while (currI >= index) {
-    arr[currI + 1] = arr[currI];
-    currI--;
-  }
+const traverse = (node, arr) => {
+  if (node.left) traverse(node.left, arr);
+  arr.push(node.val);
+  if (node.right) traverse(node.right, arr);
 };
 
-var merge = function (nums1, m, nums2, n) {
-  let i1 = 0,
-    i2 = 0,
-    maxI1 = m - 1;
+var inorderTraversal = function (root) {
+  if (!root) return [];
 
-  while (i2 < n) {
-    const elem2 = nums2[i2];
+  const nums = [];
 
-    while (elem2 >= nums1[i1] && i1 <= maxI1) {
-      i1++;
-    }
+  traverse(root, nums);
 
-    _shift(nums1, i1, maxI1);
-
-    nums1[i1] = elem2;
-
-    i2++;
-    maxI1++;
-  }
+  return nums;
 };
