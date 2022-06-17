@@ -7,22 +7,19 @@
  * }
  */
 /**
- * @param {TreeNode} root
- * @return {number[]}
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
  */
 
-const traverse = (node, arr) => {
-  if (node.left) traverse(node.left, arr);
-  arr.push(node.val);
-  if (node.right) traverse(node.right, arr);
-};
+var isSameTree = function (p, q) {
+  if ((p && !q) || (!p && q)) return false;
 
-var inorderTraversal = function (root) {
-  if (!root) return [];
+  if (!p && !q) return true;
 
-  const nums = [];
-
-  traverse(root, nums);
-
-  return nums;
+  return (
+    p.val === q.val &&
+    isSameTree(p.left, q.left) &&
+    isSameTree(p.right, q.right)
+  );
 };
