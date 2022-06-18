@@ -1,21 +1,21 @@
 /**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @param {number} targetSum
+ * @param {string} s
  * @return {boolean}
  */
-var hasPathSum = function (root, targetSum) {
-  if (!root) return targetSum === 0;
 
-  return (
-    hasPathSum(root.left, targetSum - root.val) ||
-    hasPathSum(root.right, targetSum - root.val)
-  );
+const isAlphabet = (str) => /[a-zA-Z]/.test(str);
+
+var isPalindrome = function (s) {
+  const sArr = s
+    .toLowerCase()
+    .split("")
+    .filter((c) => isAlphabet(c));
+
+  for (let i = 0; i < sArr.length / 2; i++) {
+    if (sArr[i] !== sArr[sArr.length - i - 1]) return false;
+  }
+
+  return true;
 };
+
+console.log(isPalindrome("0P"));
