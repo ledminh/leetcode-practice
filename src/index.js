@@ -8,21 +8,14 @@
  */
 /**
  * @param {TreeNode} root
+ * @param {number} targetSum
  * @return {boolean}
  */
-
-const _height = function (node) {
-  if (!node) return -1;
-
-  return Math.max(_height(node.left), _height(node.right)) + 1;
-};
-
-var isBalanced = function (root) {
-  if (root === null) return true;
+var hasPathSum = function (root, targetSum) {
+  if (!root) return targetSum === 0;
 
   return (
-    Math.abs(_height(root.left) - _height(root.right)) <= 1 &&
-    isBalanced(root.left) &&
-    isBalanced(root.right)
+    hasPathSum(root.left, targetSum - root.val) ||
+    hasPathSum(root.right, targetSum - root.val)
   );
 };
