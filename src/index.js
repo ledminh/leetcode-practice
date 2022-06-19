@@ -1,56 +1,31 @@
-var MinStack = function () {
-  this.arr = [];
-  this.minIndex = -1;
-};
+/**
+ * Definition for read4()
+ *
+ * @param {character[]} buf4 Destination buffer
+ * @return {number} The number of actual characters read
+ * read4 = function(buf4) {
+ *     ...
+ * };
+ */
 
 /**
- * @param {number} val
- * @return {void}
+ * @param {function} read4()
+ * @return {function}
  */
-MinStack.prototype.push = function (val) {
-  this.arr.push(val);
+var solution = function (read4) {
+  /**
+   * @param {character[]} buf Destination buffer
+   * @param {number} n Number of characters to read
+   * @return {number} The number of actual characters read
+   */
+  return function (buf, n) {
+    let tempBuf = [];
 
-  if (this.minIndex === -1) this.minIndex = 0;
-  else if (this.arr[this.minIndex] > val) {
-    this.minIndex = this.arr.length - 1;
-  }
-};
-
-/**
- * @return {void}
- */
-MinStack.prototype.pop = function () {
-  this.arr.pop();
-
-  if (this.minIndex === this.arr.length) {
-    this.minIndex = 0;
-    for (let i = 0; i < this.arr.length; i++) {
-      if (this.arr[i] < this.arr[this.minIndex]) {
-        this.minIndex = i;
-      }
+    while (!read4(tempBuf)) {
+      buf = [...buf, ...tempBuf];
+      tempBuf = [];
     }
-  }
-};
 
-/**
- * @return {number}
- */
-MinStack.prototype.top = function () {
-  return this.arr[this.arr.length - 1];
+    return buf.length;
+  };
 };
-
-/**
- * @return {number}
- */
-MinStack.prototype.getMin = function () {
-  return this.arr[this.minIndex];
-};
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * var obj = new MinStack()
- * obj.push(val)
- * obj.pop()
- * var param_3 = obj.top()
- * var param_4 = obj.getMin()
- */
