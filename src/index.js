@@ -1,31 +1,66 @@
 /**
- * Definition for read4()
- *
- * @param {character[]} buf4 Destination buffer
- * @return {number} The number of actual characters read
- * read4 = function(buf4) {
- *     ...
- * };
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
  */
+
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
+const createList = (arr) => {
+  const head = new ListNode(arr[0]);
+  let i = 1,
+    currNode = head;
+
+  while (i < arr.length) {
+    const tempN = new ListNode(arr[i]);
+
+    currNode.next = tempN;
+    currNode = tempN;
+
+    i++;
+  }
+
+  return head;
+};
 
 /**
- * @param {function} read4()
- * @return {function}
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
  */
-var solution = function (read4) {
-  /**
-   * @param {character[]} buf Destination buffer
-   * @param {number} n Number of characters to read
-   * @return {number} The number of actual characters read
-   */
-  return function (buf, n) {
-    let tempBuf = [];
+var getIntersectionNode = function (headA, headB) {
+  if (!headA || !headB) return null;
 
-    while (!read4(tempBuf)) {
-      buf = [...buf, ...tempBuf];
-      tempBuf = [];
+  let currA = headA,
+    currB = headB;
+
+  while (currA !== null) {
+    while (currB !== null && currA.val !== currB.val) {
+      console.log(currB);
+      currB = currB.next;
     }
 
-    return buf.length;
-  };
+    if (currA.val === currB.val) return currA.val;
+
+    currA = currA.next;
+  }
+
+  return null;
 };
+
+const test = (arr1, arr2) => {
+  console.log("==================");
+  const headA = createList(arr1);
+  const headB = createList(arr2);
+
+  const node = getIntersectionNode(headA, headB);
+
+  console.log(node);
+};
+
+test([8], [4, 1, 8, 4, 5]);
