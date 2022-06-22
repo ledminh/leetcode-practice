@@ -1,19 +1,34 @@
 /**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
+ * @param {string[]} strs
+ * @return {string[][]}
  */
-var twoSum = function(nums, target) {
-  const cache = {};
 
-  for(let i = 0; i < nums.length; i++) {
-    if(!cache[target - nums[i]]) cache[nums[i]] = i;
-    else {
-      return [cache[target - nums[i]], i];
+var groupAnagrams = function (strs) {
+  const assembleObj = {};
+  const charCodeA = "a".charCodeAt(0);
+
+  for (let i = 0; i < strs.length; i++) {
+    const currStr = strs[i];
+
+    const alphabetArr = Array(26).fill(0);
+
+    for (let j = 0; j < currStr.length; j++) {
+      alphabetArr[currStr.charCodeAt(j) - charCodeA]++;
     }
+
+    const alphabetStr = alphabetArr.join("#");
+
+    if (!assembleObj[alphabetStr]) assembleObj[alphabetStr] = [currStr];
+    else assembleObj[alphabetStr].push(currStr);
   }
+
+  const result = Object.keys(assembleObj).reduce((r, key) => {
+    r.push(assembleObj[key]);
+    return r;
+  }, []);
+
+  return result;
 };
 
-
-console.log("=========");
-console.log(twoSum([3,2,4], 6));
+console.log("=======================");
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
