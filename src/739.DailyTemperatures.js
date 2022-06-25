@@ -22,7 +22,3 @@ var dailyTemperatures = function (temperatures) {
 
   return answers;
 };
-console.log("-------------------");
-console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
-
-//expect: [1,1,4,2,1,1,0,0]
