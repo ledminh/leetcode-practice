@@ -37,8 +37,3 @@ var evalRPN = function (tokens) {
 
   return numsStack[0];
 };
-
-console.log("=====================");
-console.log(
-  evalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"])
-);
