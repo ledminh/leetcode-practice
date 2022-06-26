@@ -16,25 +16,21 @@ var minEatingSpeed = function (piles, h) {
 
   const _getSpeed = (minSpeed, maxSpeed) => {
     if (minSpeed >= maxSpeed - 1) {
-      if (_getTime(minSpeed) <= h) return minSpeed;
-      if (_getTime(maxSpeed) <= h) return maxSpeed;
-    }
+      if(_getTime(minSpeed) <= h) return minSpeed;
+      if(_getTime(maxSpeed) <= h) return maxSpeed;
+     } 
 
     const midSpeed = Math.floor((minSpeed + maxSpeed) / 2);
 
     if (_getTime(midSpeed) <= h) {
-      console.log(
-        `minSpeed = ${minSpeed} --- maxSpeed = ${maxSpeed} ---- midSpeed (${midSpeed}) < h (${h})`
-      );
-
+      console.log(`minSpeed = ${minSpeed} --- maxSpeed = ${maxSpeed} ---- midSpeed (${midSpeed}) < h (${h})`);
+      
       return _getSpeed(minSpeed, midSpeed - 1);
     }
 
     if (_getTime(midSpeed) > h) {
-      console.log(
-        `minSpeed = ${minSpeed} --- maxSpeed = ${maxSpeed} ---- midSpeed (${midSpeed}) > h (${h})`
-      );
-
+      console.log(`minSpeed = ${minSpeed} --- maxSpeed = ${maxSpeed} ---- midSpeed (${midSpeed}) > h (${h})`);
+      
       return _getSpeed(midSpeed + 1, maxSpeed);
     }
   };
