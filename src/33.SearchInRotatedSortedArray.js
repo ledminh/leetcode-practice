@@ -10,8 +10,6 @@ var search = function (nums, target) {
   while (start <= end) {
     const mid = Math.floor((start + end) / 2);
 
-    console.log(start, mid, end);
-
     if (nums[mid] === target) return mid;
 
     if (nums[mid] >= nums[start]) {
@@ -35,6 +33,3 @@ var search = function (nums, target) {
 
   return -1;
 };
-
-console.log("---------------");
-console.log(search([4, 5, 6, 7, 0, 1, 2], 0));
