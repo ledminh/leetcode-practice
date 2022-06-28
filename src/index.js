@@ -1,40 +1,38 @@
 /**
  * @param {number[]} nums
- * @param {number} target
  * @return {number}
  */
-var search = function (nums, target) {
+var findMin = function (nums) {
+  if (nums.length === 1) return nums[0];
+
   let start = 0,
-    end = nums.length - 1;
+    end = nums.length - 1,
+    res = Number.POSITIVE_INFINITY;
 
   while (start <= end) {
     const mid = Math.floor((start + end) / 2);
+    console.log(`start = ${start} --- mid = ${mid} --- end = ${end}`);
+    if (nums[mid] < res) {
+      res = nums[mid];
+    }
 
-    console.log(start, mid, end);
-
-    if (nums[mid] === target) return mid;
-
-    if (nums[mid] >= nums[start]) {
-      // mid is in the left sorted portion of the array
-
-      if (nums[mid] < target || target < nums[start]) {
-        start = mid + 1;
-      } else {
-        end = mid - 1;
+    if (nums[start] < nums[end]) {
+      if (nums[start] < res) {
+        console.log(`nums[start] (${nums[start]}) < res (${res})`);
+        res = nums[start];
+        break;
       }
+    } else if (nums[mid] < nums[start]) {
+      console.log(`nums[mid] (${nums[mid]}) < nums[start] (${nums[start]})`);
+      end = mid - 1;
     } else {
-      // mid is in the right sorted portion of the array
-
-      if (nums[mid] > target || target > nums[end]) {
-        end = mid - 1;
-      } else {
-        start = mid + 1;
-      }
+      console.log(`nums[mid] (${nums[mid]}) > nums[start] (${nums[start]})`);
+      start = mid + 1;
     }
   }
 
-  return -1;
+  return res;
 };
 
-console.log("---------------");
-console.log(search([4, 5, 6, 7, 0, 1, 2], 0));
+console.log("---------------------");
+console.log(findMin([2, 1]));
