@@ -1,38 +1,60 @@
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var findMin = function (nums) {
-  if (nums.length === 1) return nums[0];
-
-  let start = 0,
-    end = nums.length - 1,
-    res = Number.POSITIVE_INFINITY;
-
-  while (start <= end) {
-    const mid = Math.floor((start + end) / 2);
-    console.log(`start = ${start} --- mid = ${mid} --- end = ${end}`);
-    if (nums[mid] < res) {
-      res = nums[mid];
-    }
-
-    if (nums[start] < nums[end]) {
-      if (nums[start] < res) {
-        console.log(`nums[start] (${nums[start]}) < res (${res})`);
-        res = nums[start];
-        break;
-      }
-    } else if (nums[mid] < nums[start]) {
-      console.log(`nums[mid] (${nums[mid]}) < nums[start] (${nums[start]})`);
-      end = mid - 1;
-    } else {
-      console.log(`nums[mid] (${nums[mid]}) > nums[start] (${nums[start]})`);
-      start = mid + 1;
-    }
-  }
-
-  return res;
+var TimeMap = function() {
+    this.hashTable = {};
 };
 
-console.log("---------------------");
-console.log(findMin([2, 1]));
+/** 
+ * @param {string} key 
+ * @param {string} value 
+ * @param {number} timestamp
+ * @return {void}
+ */
+TimeMap.prototype.set = function(key, value, timestamp) {
+    if(!this.hashTable[key]) {
+        this.hashTable[key] = [{value: value, timestamp: timestamp}];
+    }
+    else {
+        this.hashTable[key].push({value: value, timestamp: timestamp});
+    }
+};
+
+/** 
+ * @param {string} key 
+ * @param {number} timestamp
+ * @return {string}
+ */
+TimeMap.prototype.get = function(key, timestamp) {
+    if(!this.hashTable[key]) return "";
+    
+    const arr = this.hashTable[key];
+    
+    let start = 0, end = arr.length - 1;
+    
+    while(start < end) {
+        const mid = Math.floor((start + end)/2);
+        
+        if(arr[mid].timestamp === timestamp) return arr[mid].value;
+        
+        if(arr[mid].timestamp < timestamp) {
+            start = mid + 1;
+        }
+        else if(arr[mid].timestamp > timestamp) {
+            end = mid - 1;
+        }
+        
+        
+    }
+    
+    return arr[start].value;
+    
+};
+
+TimeMap timeMap = new TimeMap();
+timeMap.set("foo", "bar", 1);
+
+
+/** 
+ * Your TimeMap object will be instantiated and called as such:
+ * var obj = new TimeMap()
+ * obj.set(key,value,timestamp)
+ * var param_2 = obj.get(key,timestamp)
+ */
