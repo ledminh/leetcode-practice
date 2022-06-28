@@ -1,8 +1,3 @@
-function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
-}
-
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -50,43 +45,3 @@ var reverseList = function (head) {
 
   //   return prevNode;
 };
-
-const createList = (arr) => {
-  let prevN = null,
-    currNode = null,
-    head = null;
-
-  for (let i = 0; i < arr.length; i++) {
-    currNode = new ListNode(arr[i]);
-
-    if (!head) head = currNode;
-
-    if (prevN) prevN.next = currNode;
-
-    prevN = currNode;
-  }
-
-  currNode.next = null;
-
-  return head;
-};
-
-const readList = (head) => {
-  console.log("-----------------");
-  let s = "";
-  let i = 0;
-
-  while (head && i < 20) {
-    s += head.val + " -- ";
-    head = head.next;
-    i++;
-  }
-
-  console.log(s);
-};
-
-const list = createList([1, 2, 3, 4, 5, 6]);
-
-const listR = reverseList(list);
-
-readList(listR);
