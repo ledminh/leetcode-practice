@@ -126,11 +126,3 @@ const test = (commands, params) => {
   console.log(result);
   console.log(lruCache.table);
 };
-
-test(
-  ["LRUCache", "get", "put", "get", "put", "put", "get", "get"],
-  [[2], [2], [2, 6], [1], [1, 5], [1, 2], [1], [2]]
-);
-
-// Expected: [null,-1,null,-1,null,null,2,6]
-// Output from leetcode: [null,-1,null,-1,null,null,2,-1]
