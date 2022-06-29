@@ -1,66 +1,51 @@
-function ListNode(val, next) {
-  this.val = val === undefined ? 0 : val;
-  this.next = next === undefined ? null : next;
-}
+function Node(val, next, random) {
+    this.val = val;
+    this.next = next;
+    this.random = random;
+};
 
 /**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
+ * // Definition for a Node.
+ * function Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
  */
+
 /**
- * @param {ListNode} head
- * @return {void} Do not return anything, modify head in-place instead.
+ * @param {Node} head
+ * @return {Node}
  */
-var reorderList = function (head) {
-  if (head === null) return null;
-  else if (head.next === null) return head;
-
-  let fastP = head,
-    slowP = head;
-
-  while (fastP !== null && fastP.next !== null) {
-    slowP = slowP.next;
-    fastP = fastP.next.next;
-  }
-
-  // let midP = null;
-  // if(fastP === null) midP = slowP;
-  // else midP = slowP.next;
-
-  let midP = slowP;
-
-  let prev = midP,
-    curr = midP.next;
-
-  while (curr !== null) {
-    const next = curr.next;
-
-    curr.next = prev;
-
-    prev = curr;
-
-    curr = next;
-  }
-
-  let rightP = prev,
-    leftP = head;
-
-  while (rightP !== midP && leftP !== midP) {
-    const newL = leftP.next;
-    const newR = rightP.next;
-
-    leftP.next = rightP;
-
-    rightP.next = newL;
-
-    leftP = newL;
-    rightP = newR;
-  }
-
-  midP.next = null;
+var copyRandomList = function(head) {
+    const cache = {};
+    
+    let currN = head, newHead = null; 
+    
+    while(currN !== null) {
+        
+        cache[currN] = new Node(currN.val, null, null);
+        
+        if(!newHead) 
+            newHead = cache[currN];
+        
+        
+        currN = currN.next;
+    }
+    
+    currN = head;
+    
+    while(currN !== null) {
+        const newNextNode = cache[currN.next];
+        const newRandomNode  = cache[currN.random];
+        
+        cache[currN].next = newNextNode;
+        cache[currN].random = newRandomNode;
+        
+        currN = currN.next;
+    }
+    
+    return newHead;
 };
 
 const createList = (arr) => {
@@ -69,7 +54,7 @@ const createList = (arr) => {
     head = null;
 
   for (let i = 0; i < arr.length; i++) {
-    currNode = new ListNode(arr[i]);
+    currNode = new Node(arr[i][0], null, arr[]);
 
     if (!head) head = currNode;
 
@@ -97,7 +82,7 @@ const readList = (head) => {
   console.log(s);
 };
 
-const list = createList([1, 2, 3, 5, 6, 7]);
+const list = createList([[7,null],[13,0],[11,4],[10,2],[1,0]]);
 
 reorderList(list);
 
