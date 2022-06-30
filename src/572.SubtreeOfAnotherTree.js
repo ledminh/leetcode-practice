@@ -26,6 +26,9 @@ const isSameTree = (tree1, tree2) => {
 };
 
 var isSubtree = function (root, subRoot) {
+  if (!root && !subRoot) return true;
+  else if (!root || !subRoot) return false;
+
   return (
     isSameTree(root, subRoot) ||
     isSubtree(root.left, subRoot) ||
