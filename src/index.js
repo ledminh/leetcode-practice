@@ -1,34 +1,79 @@
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @param {TreeNode} subRoot
- * @return {boolean}
- */
+function Node(val) {
+  this.value = val ? val : null;
+  this.children = {};
+}
 
-const isSameTree = (tree1, tree2) => {
-  if (!tree1 && !tree2) return true;
-  else if (!tree1 || !tree2) {
-    return false;
+var WordDictionary = function () {
+  this.root = new Node();
+};
+
+/**
+ * @param {string} word
+ * @return {void}
+ */
+WordDictionary.prototype.addWord = function (word) {
+  let currN = this.root,
+    i = 0;
+
+  while (currN.children[word[i]]) {
+    currN = currN.children[word[i]];
+    i++;
   }
 
-  return (
-    tree1.val === tree2.val &&
-    isSameTree(tree1.left, tree2.left) &&
-    isSameTree(tree1.right, tree2.right)
-  );
+  while (i < word.length) {
+    const prevN = currN;
+    currN = new Node(word[i]);
+    prevN.children[word[i]] = currN;
+    i++;
+  }
+
+  currN.children.end = true;
 };
 
-var isSubtree = function (root, subRoot) {
-  return (
-    isSameTree(root, subRoot) ||
-    isSubtree(root.left, subRoot) ||
-    isSubtree(root.right, subRoot)
-  );
+WordDictionary.prototype._search = function (word, startNode) {
+  console.log(word);
+  if (word.length === 0) {
+    if (startNode.children.end) return true;
+    else return false;
+  } else if (word[0] === ".") {
+    const nodes = Object.keys(startNode.children)
+      .filter((k) => k !== "end")
+      .map((key) => startNode.children[key]);
+
+    for (let i = 0; i < nodes.length; i++) {
+      if (this._search(word.slice(1), nodes[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  } else if (startNode.children[word[0]]) {
+    return this._search(word.slice(1), startNode.children[word[0]]);
+  } else {
+    return false;
+  }
 };
+
+/**
+ * @param {string} word
+ * @return {boolean}
+ */
+WordDictionary.prototype.search = function (word) {
+  return this._search(word, this.root);
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * var obj = new WordDictionary()
+ * obj.addWord(word)
+ * var param_2 = obj.search(word)
+ */
+
+const wD = new WordDictionary();
+
+console.log("----------------");
+wD.addWord("at");
+wD.addWord("and");
+wD.addWord("an");
+wD.addWord("add");
+console.log(wD.search("a"));
