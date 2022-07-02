@@ -134,6 +134,3 @@ var leastInterval = function (tasks, n) {
 
   return time;
 };
-
-console.log("-------------------");
-console.log(leastInterval(["A", "A", "A", "B", "B", "B"], 2));
