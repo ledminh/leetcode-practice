@@ -50,6 +50,3 @@ MinHeap.prototype.peek = function () {
 var findKthLargest = function (nums, k) {
   return new MinHeap(nums, k).peek();
 };
-
-console.log("----------");
-console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2));
