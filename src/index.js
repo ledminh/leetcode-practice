@@ -1,9 +1,5 @@
-/**
- * @param {number} k
- * @param {number[]} nums
- */
-var KthLargest = function (k, nums) {
-  this.arr = nums.slice();
+function Heap(arr, k) {
+  this.arr = arr.slice();
   this.k = k;
 
   for (let i = Math.floor(this.arr.length / 2) - 1; i >= 0; i--) {
@@ -13,70 +9,64 @@ var KthLargest = function (k, nums) {
   while (this.arr.length > k) {
     this.pop();
   }
-};
+}
 
-KthLargest.prototype.heapify = function (i) {
+Heap.prototype.heapify = function (i) {
   const maxI = this.arr.length - 1;
 
-  let iSmallest = i;
+  let iLargest = i;
 
-  if (2 * i + 1 <= maxI && this.arr[2 * i + 1] < this.arr[iSmallest]) {
-    iSmallest = 2 * i + 1;
+  if (2 * i + 1 <= maxI && this.arr[2 * i + 1][2] > this.arr[iLargest][2]) {
+    iLargest = 2 * i + 1;
   }
 
-  if (2 * i + 2 <= maxI && this.arr[2 * i + 2] < this.arr[iSmallest]) {
-    iSmallest = 2 * i + 2;
+  if (2 * i + 2 <= maxI && this.arr[2 * i + 2][2] > this.arr[iLargest][2]) {
+    iLargest = 2 * i + 2;
   }
 
-  if (iSmallest !== i) {
-    let temp = this.arr[i];
-    this.arr[i] = this.arr[iSmallest];
-    this.arr[iSmallest] = temp;
+  if (i !== iLargest) {
+    let temp = this.arr[iLargest];
+    this.arr[iLargest] = this.arr[i];
+    this.arr[i] = temp;
 
-    this.heapify(iSmallest);
+    this.heapify(iLargest);
   }
 };
 
-KthLargest.prototype.pop = function () {
-  let temp = this.arr[this.arr.length - 1];
-  this.arr[this.arr.length - 1] = this.arr[0];
-  this.arr[0] = temp;
+Heap.prototype.pop = function () {
+  this.arr[0] = this.arr[this.arr.length - 1];
 
   this.arr.pop();
 
   this.heapify(0);
 };
 
-/**
- * @param {number} val
- * @return {number}
- */
-KthLargest.prototype.add = function (val) {
-  if (this.arr.length < this.k) {
-    this.arr.push(this.arr[0]);
-    this.arr[0] = val;
-
-    this.heapify(0);
-  } else if (val >= this.arr[0]) {
-    this.arr[0] = val;
-    this.heapify(0);
-  }
-
-  return this.arr[0];
+Heap.prototype.toArray = function () {
+  return this.arr;
 };
 
 /**
- * Your KthLargest object will be instantiated and called as such:
- * var obj = new KthLargest(k, nums)
- * var param_1 = obj.add(val)
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
  */
+var kClosest = function (points, k) {
+  const heap = new Heap(
+    points.map((p) => [...p, p[0] * p[0] + p[1] * p[1]]),
+    k
+  );
+
+  return heap.toArray().map((p) => [p[0], p[1]]);
+};
 
 console.log("----------");
-const heap = new KthLargest(2, [0]);
-console.log(heap.add(-1));
-console.log(heap.add(1));
-console.log(heap.add(-2));
-console.log(heap.add(-4));
-console.log(heap.add(3));
-
-console.log(heap.arr);
+console.log(
+  kClosest(
+    [
+      [3, 3],
+      [5, -1],
+      [-2, 4]
+    ],
+    2
+  )
+);
