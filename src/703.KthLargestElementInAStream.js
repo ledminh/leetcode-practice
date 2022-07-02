@@ -70,13 +70,3 @@ KthLargest.prototype.add = function (val) {
  * var obj = new KthLargest(k, nums)
  * var param_1 = obj.add(val)
  */
-
-console.log("----------");
-const heap = new KthLargest(2, [0]);
-console.log(heap.add(-1));
-console.log(heap.add(1));
-console.log(heap.add(-2));
-console.log(heap.add(-4));
-console.log(heap.add(3));
-
-console.log(heap.arr);
