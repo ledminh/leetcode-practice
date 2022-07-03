@@ -135,34 +135,3 @@ MedianFinder.prototype.findMedian = function () {
  * obj.addNum(num)
  * var param_2 = obj.findMedian()
  */
-
-const mFinder = new MedianFinder();
-
-function run(commands, params) {
-  console.log("---------Start Test---------------");
-  let result = "";
-  for (let i = 0; i < commands.length; i++) {
-    switch (commands[i]) {
-      case "addNum":
-        result += `Adding ${params[i][0]} to mFinder \n`;
-        mFinder.addNum(...params[i]);
-        result += `smallHeap = ${mFinder.smallHeap.arr} largeHeap = ${mFinder.largeHeap.arr}\n`;
-        result += ".........\n";
-        break;
-      case "findMedian":
-        result += `Median = ${mFinder.findMedian()}\n`;
-        result += `smallHeap = ${mFinder.smallHeap.arr} largeHeap = ${mFinder.largeHeap.arr}\n`;
-        result += ".........\n";
-        break;
-      default:
-        break;
-    }
-  }
-  console.log(result);
-  console.log("---------End Test---------------");
-}
-
-run(
-  ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"],
-  [[], [1], [2], [], [3], []]
-);
