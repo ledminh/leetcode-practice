@@ -18,6 +18,8 @@ var exist = function (board, word) {
       }
     }
 
+    if (wordI > maxWordI) return true;
+
     if (seen[rowI + "-" + colI]) {
       return false;
     }
@@ -52,16 +54,3 @@ var exist = function (board, word) {
 
   return false;
 };
-
-console.log("------------------");
-console.log(
-  exist(
-    [
-      ["B", "D", "T", "A"],
-      ["A", "T", "C", "S"],
-      ["A", "D", "E", "E"],
-      ["A", "D", "E", "E"]
-    ],
-    "TDBATC"
-  )
-);
