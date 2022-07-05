@@ -39,16 +39,12 @@ var numIslands = function (grid) {
   };
 
   let numIslands = 0;
-  let log = ``;
 
   for (let r = 0; r < grid.length; r++) {
     for (let c = 0; c < grid[0].length; c++) {
       if (grid[r][c] === "1" && !visited[r + "-" + c]) {
         _search(r, c);
 
-        log += `r = ${r} c = ${c} visited = ${Object.keys(visited).filter(
-          (k) => visited[k]
-        )} \n`;
         numIslands++;
       }
     }
@@ -56,13 +52,3 @@ var numIslands = function (grid) {
 
   return numIslands;
 };
-
-console.log("-------------------");
-
-console.log(
-  numIslands([
-    ["1", "1", "1"],
-    ["0", "1", "0"],
-    ["0", "1", "0"]
-  ])
-);
