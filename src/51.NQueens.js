@@ -57,6 +57,3 @@ var solveNQueens = function (n) {
 
   return res;
 };
-
-console.log("------------------------");
-console.log(solveNQueens(4));
