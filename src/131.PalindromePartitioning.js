@@ -39,6 +39,3 @@ var partition = function (s) {
 
   return res;
 };
-
-console.log("------------------------");
-console.log(partition("efe"));
