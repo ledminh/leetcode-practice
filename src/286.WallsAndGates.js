@@ -54,14 +54,3 @@ var wallsAndGates = function (rooms) {
     }
   }
 };
-
-console.log("--------------");
-const rooms = [
-  [2147483647, 0, 2147483647, 2147483647, 0, 2147483647, -1, 2147483647]
-];
-
-wallsAndGates(rooms);
-
-console.log(rooms);
-
-// Expect: [[1,0,1,1,0,1,-1,2147483647]]
