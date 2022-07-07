@@ -61,14 +61,3 @@ var orangesRotting = function (grid) {
 
   return numFreshs === 0 ? time : -1;
 };
-
-console.log("----------------");
-const grid = [
-  [2, 1, 1],
-  [1, 1, 0],
-  [0, 1, 1]
-];
-
-console.log(orangesRotting(grid));
-
-console.log(grid);
