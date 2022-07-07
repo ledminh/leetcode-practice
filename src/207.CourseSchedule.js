@@ -42,6 +42,3 @@ var canFinish = function (numCourses, prerequisites) {
 
   return true;
 };
-
-console.log("---------------------");
-console.log(canFinish(2, [[1, 0]]));
