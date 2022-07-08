@@ -62,17 +62,3 @@ var ladderLength = function (beginWord, endWord, wordList) {
 
   return 0;
 };
-
-console.log("------------------------");
-
-console.log(
-  ladderLength("leet", "code", [
-    "lest",
-    "leet",
-    "lose",
-    "code",
-    "lode",
-    "robe",
-    "lost"
-  ])
-);
