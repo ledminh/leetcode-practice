@@ -1,47 +1,65 @@
 /**
- * @param {number} numCourses
- * @param {number[][]} prerequisites
- * @return {boolean}
+ * @param {number[][]} edges
+ * @return {number[]}
  */
-var canFinish = function (numCourses, prerequisites) {
-  const prereqMap = {};
-  const visited = {};
+var findRedundantConnection = function (edges) {
+  const nodesMap = [];
 
-  const _traverse = (curCourse) => {
-    if (visited[curCourse]) return false;
+  const findHead = (vertex) => {
+    if (nodesMap[vertex - 1][0] === vertex) return vertex;
 
-    visited[curCourse] = true;
-
-    for (let i = 0; i < prereqMap[curCourse].length; i++) {
-      if (_traverse(prereqMap[curCourse][i])) {
-        prereqMap[curCourse].splice(i, 1);
-        i--;
-      } else {
-        visited[curCourse] = false;
-        return false;
-      }
-    }
-
-    visited[curCourse] = false;
-    return true;
+    return findHead(nodesMap[vertex - 1][0]);
   };
 
-  for (let i = 0; i < numCourses; i++) {
-    prereqMap[i] = [];
+  for (let i = 0; i < 5; i++) {
+    const parentNode = i + 1,
+      size = 1;
+    nodesMap.push([parentNode, size]);
   }
 
-  for (let i = 0; i < prerequisites.length; i++) {
-    const [course, preC] = prerequisites[i];
+  // for (let i = 0; i < edges.length; i++) {
+  //   const parentNode = i + 1,
+  //     size = 1;
+  //   nodesMap.push([parentNode, size]);
+  // }
 
-    prereqMap[course].push(preC);
+  for (let i = 0; i < edges.length; i++) {
+    const [v1, v2] = edges[i];
+
+    const [v1Parent, v1Size] = nodesMap[v1 - 1];
+    const [v2Parent, v2Size] = nodesMap[v2 - 1];
+
+    const v1Head = findHead(v1Parent);
+    const v2Head = findHead(v2Parent);
+
+    if (v1Head === v2Head) {
+      return [v1, v2];
+    } else if (v1Size > v2Size) {
+      nodesMap[v2 - 1][0] = v1Parent;
+
+      const newSize = nodesMap[v1 - 1][1] + nodesMap[v2 - 1][1];
+
+      nodesMap[v1 - 1][1] = newSize;
+      nodesMap[v2 - 1][1] = newSize;
+    } else {
+      nodesMap[v1 - 1][0] = v2Parent;
+
+      const newSize = nodesMap[v1 - 1][1] + nodesMap[v2 - 1][1];
+      nodesMap[v1 - 1][1] = newSize;
+      nodesMap[v2 - 1][1] = newSize;
+    }
   }
 
-  for (let i = 0; i < numCourses; i++) {
-    if (!_traverse(i)) return false;
-  }
-
-  return true;
+  console.log(nodesMap);
 };
 
-console.log("---------------------");
-console.log(canFinish(2, [[1, 0]]));
+console.log("----------------------");
+console.log(
+  findRedundantConnection([
+    [1, 5],
+    [3, 4]
+    // [3, 5],
+    // [4, 5],
+    // [2, 4]
+  ])
+);
