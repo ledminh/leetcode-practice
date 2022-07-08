@@ -40,13 +40,3 @@ var countComponents = function (n, edges) {
 
   return numGroups;
 };
-
-console.log("---------------");
-
-console.log(
-  countComponents(5, [
-    [0, 1],
-    [1, 2],
-    [3, 4]
-  ])
-);
