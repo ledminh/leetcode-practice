@@ -23,7 +23,7 @@ var findCheapestPrice = function (n, flights, src, dst, k) {
     for (let iF = 0; iF < flights.length; iF++) {
       const [s, d, p] = flights[iF];
 
-      if (prices[s] + p < prices[d]) {
+      if (prices[s] + p < tempPrices[d]) {
         tempPrices[d] = prices[s] + p;
       }
     }
@@ -33,21 +33,3 @@ var findCheapestPrice = function (n, flights, src, dst, k) {
 
   return prices[dst] === Number.POSITIVE_INFINITY ? -1 : prices[dst];
 };
-
-console.log("-------------------");
-
-console.log(
-  findCheapestPrice(
-    4,
-    [
-      [0, 1, 100],
-      [1, 2, 100],
-      [2, 0, 100],
-      [1, 3, 600],
-      [2, 3, 200]
-    ],
-    0,
-    3,
-    1
-  )
-);
