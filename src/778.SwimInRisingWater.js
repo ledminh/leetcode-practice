@@ -70,33 +70,24 @@ var swimInWater = function (grid) {
 
     if (curR === grid.length - 1 && curC === grid[0].length - 1) {
       retVal = curMax;
-    }
+    } else {
+      if (curR - 1 >= 0 && !visited[curR - 1 + "-" + curC]) {
+        minHeap.push([curR - 1, curC, Math.max(grid[curR - 1][curC], curMax)]);
+      }
 
-    if (curR - 1 >= 0 && !visited[curR - 1 + "-" + curC]) {
-      minHeap.push([curR - 1, curC, Math.max(grid[curR - 1][curC], curMax)]);
-    }
+      if (curR + 1 <= grid.length - 1 && !visited[curR + 1 + "-" + curC]) {
+        minHeap.push([curR + 1, curC, Math.max(grid[curR + 1][curC], curMax)]);
+      }
 
-    if (curR + 1 <= grid.length - 1 && !visited[curR + 1 + "-" + curC]) {
-      minHeap.push([curR + 1, curC, Math.max(grid[curR + 1][curC], curMax)]);
-    }
+      if (curC - 1 >= 0 && !visited[curR + "-" + (curC - 1)]) {
+        minHeap.push([curR, curC - 1, Math.max(grid[curR][curC - 1], curMax)]);
+      }
 
-    if (curC - 1 >= 0 && !visited[curR + "-" + (curC - 1)]) {
-      minHeap.push([curR, curC - 1, Math.max(grid[curR][curC - 1], curMax)]);
-    }
-
-    if (curC + 1 <= grid[0].length - 1 && !visited[curR + "-" + (curC + 1)]) {
-      minHeap.push([curR, curC + 1, Math.max(grid[curR][curC + 1], curMax)]);
+      if (curC + 1 <= grid[0].length - 1 && !visited[curR + "-" + (curC + 1)]) {
+        minHeap.push([curR, curC + 1, Math.max(grid[curR][curC + 1], curMax)]);
+      }
     }
   }
 
   return retVal;
 };
-
-console.log("----------------");
-
-console.log(
-  swimInWater([
-    [0, 2],
-    [1, 3]
-  ])
-);
