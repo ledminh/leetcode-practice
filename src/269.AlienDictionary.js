@@ -32,7 +32,7 @@ var alienOrder = function (words) {
   }
 
   const visited = {};
-  let resArr = null;
+  let resArr = [];
 
   const _dfs = (c, result) => {
     if (visited[c]) return null;
@@ -55,16 +55,15 @@ var alienOrder = function (words) {
     const res = _dfs(chars[i], []);
 
     if (res) {
-      resArr = res;
-      break;
+      for (let i = 0; i < res.length; i++) {
+        if (resArr.indexOf(res[i]) === -1) {
+          resArr.push(res[i]);
+        }
+      }
+    } else {
+      return "";
     }
   }
 
-  if (resArr === null) return "";
-
   return resArr.reverse().join("");
 };
-
-console.log("-------------------");
-
-console.log(alienOrder(["z", "x", "z"]));
