@@ -1,39 +1,53 @@
 /**
- * @param {string} s
- * @return {string}
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
  */
-var longestPalindrome = function (s) {
-  const isPalindrome = (iS, iE) => {
-    let iStart = iS,
-      iEnd = iE;
+var coinChange = function (coins, amount) {
+  const cache = {};
 
-    while (iStart < iEnd && s[iStart] === s[iEnd]) {
-      iStart++;
-      iEnd--;
+  const dfs = (amountLeft, numCoins) => {
+    if (cache[amountLeft]) {
+      return cache[amountLeft];
     }
 
-    return iStart >= iEnd;
+    if (amountLeft < 0) {
+      return Number.POSITIVE_INFINITY;
+    }
+
+    if (amountLeft === 0) {
+      return numCoins;
+    }
+
+    //[1, 2, 5], 11
+
+    let min = Number.POSITIVE_INFINITY;
+
+    for (let i = 0; i < coins.length; i++) {
+      const result = dfs(amountLeft - coins[i], numCoins + 1);
+
+      if (result < min) {
+        min = result;
+      }
+    }
+
+    if (cache[amountLeft] > min) cache[amountLeft] = min;
+
+    return min;
   };
 
-  let iStart = 0,
-    iEnd = 0;
+  let min = Number.POSITIVE_INFINITY;
 
-  let result = [0, 0]; //[iStart, iEnd]
-  while (iEnd < s.length) {
-    if (isPalindrome(iStart, iEnd)) {
-      iEnd++;
-    } else {
-      if (result[1] - result[0] < iEnd - 1 - iStart)
-        result = [iStart, iEnd - 1];
+  for (let i = 0; i < coins.length; i++) {
+    const res = dfs(amount - coins[i], 1);
 
-      iStart++;
+    if (res < min) {
+      min = res;
     }
-
-    console.log(s.substring(iStart, iEnd + 1));
   }
 
-  return s.substring(result[0], result[1] + 1);
+  return min;
 };
 
-console.log("---------------");
-console.log(longestPalindrome("babad"));
+console.log("----------------------");
+console.log(coinChange([1, 2, 5], 11));
