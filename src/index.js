@@ -1,53 +1,32 @@
 /**
- * @param {number[]} coins
- * @param {number} amount
- * @return {number}
+ * @param {string} s
+ * @param {string[]} wordDict
+ * @return {boolean}
  */
-var coinChange = function (coins, amount) {
-  const cache = {};
+var wordBreak = function (s, wordDict) {
+  let i = 0,
+    curString = s;
 
-  const dfs = (amountLeft, numCoins) => {
-    if (cache[amountLeft]) {
-      return cache[amountLeft];
-    }
+  while (i < s.length) {
+    curString = s.substring(i);
 
-    if (amountLeft < 0) {
-      return Number.POSITIVE_INFINITY;
-    }
+    let found = false;
 
-    if (amountLeft === 0) {
-      return numCoins;
-    }
+    for (let iW = 0; iW < wordDict.length && !found; iW++) {
+      const curW = wordDict[iW];
 
-    //[1, 2, 5], 11
+      if (curString.indexOf(curW) === 0) {
+        found = true;
 
-    let min = Number.POSITIVE_INFINITY;
-
-    for (let i = 0; i < coins.length; i++) {
-      const result = dfs(amountLeft - coins[i], numCoins + 1);
-
-      if (result < min) {
-        min = result;
+        i += curW.length;
       }
     }
 
-    if (cache[amountLeft] > min) cache[amountLeft] = min;
-
-    return min;
-  };
-
-  let min = Number.POSITIVE_INFINITY;
-
-  for (let i = 0; i < coins.length; i++) {
-    const res = dfs(amount - coins[i], 1);
-
-    if (res < min) {
-      min = res;
-    }
+    if (!found) return false;
   }
 
-  return min;
+  return true;
 };
 
-console.log("----------------------");
-console.log(coinChange([1, 2, 5], 11));
+console.log("-----------------------");
+console.log(wordBreak("leetcode", ["leet", "code"]));
