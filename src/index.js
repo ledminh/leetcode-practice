@@ -1,32 +1,16 @@
-/**
- * @param {string} s
- * @param {string[]} wordDict
- * @return {boolean}
- */
-var wordBreak = function (s, wordDict) {
-  let i = 0,
-    curString = s;
+var longestCommonSubsequence = function (text1, text2) {
+  let m = text1.length,
+    n = text2.length,
+    DP = new Array(m + 1).fill(0).map((_) => new Array(n + 1).fill(0));
 
-  while (i < s.length) {
-    curString = s.substring(i);
-
-    let found = false;
-
-    for (let iW = 0; iW < wordDict.length && !found; iW++) {
-      const curW = wordDict[iW];
-
-      if (curString.indexOf(curW) === 0) {
-        found = true;
-
-        i += curW.length;
+  for (let x = m - 1; x >= 0; x--)
+    for (let y = n - 1; y >= 0; y--) {
+      if (text1[x] === text2[y]) {
+        DP[x][y] = 1 + DP[x + 1][y + 1];
+      } else {
+        DP[x][y] = Math.max(DP[x + 1][y], DP[x][y + 1]);
       }
     }
 
-    if (!found) return false;
-  }
-
-  return true;
+  return DP[0][0];
 };
-
-console.log("-----------------------");
-console.log(wordBreak("leetcode", ["leet", "code"]));
